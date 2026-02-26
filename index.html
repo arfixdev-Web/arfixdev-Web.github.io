@@ -3,45 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARFIX | المركز التقني</title>
+    <title>ARFIX | System Environment</title>
     <style>
+        :root {
+            --neon-blue: #00ffff;
+            --dark-space: #020617;
+        }
         body {
-            background-color: #000814; /* أزرق داكن جداً */
-            color: #ffffff;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
+            background-color: var(--dark-space);
+            color: white;
+            font-family: 'Courier New', Courier, monospace; /* خط يوحي بالبرمجة */
             margin: 0;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
             height: 100vh;
+            overflow: hidden;
         }
-        .logo {
-            max-width: 200px;
-            margin: 0 auto 20px;
-            filter: drop-shadow(0 0 10px #00ffff);
+        /* تأثير النيون المتنفس للشعار */
+        .logo-container img {
+            max-width: 250px;
+            filter: drop-shadow(0 0 15px var(--neon-blue));
+            animation: breathe 4s ease-in-out infinite;
         }
-        h1 { color: #00ffff; font-size: 2.5rem; margin-top: 0; }
-        p { color: #8ecae6; font-size: 1.1rem; padding: 0 20px; }
-        .btn {
-            display: inline-block;
-            background: transparent;
-            color: #00ffff;
-            border: 2px solid #00ffff;
-            padding: 12px 35px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
+        @keyframes breathe {
+            0%, 100% { opacity: 0.8; transform: scale(1); filter: drop-shadow(0 0 10px var(--neon-blue)); }
+            50% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 25px var(--neon-blue)); }
         }
-        .btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 15px #00ffff; }
+        .system-status {
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        .typing {
+            border-left: 2px solid var(--neon-blue);
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 10px auto;
+            letter-spacing: 2px;
+            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--neon-blue); } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ARFIX</h1>
-        <p>نظام الريكفري الذكي والأدوات المتقدمة للأندرويد.</p>
-        <a href="#" class="btn">قريباً</a>
+    <div class="system-status">
+        <div class="logo-container">
+            <img src="Logo.png" alt="ARFIX Logo">
+        </div>
+        <div class="typing">> جاري فحص بيئة النظام...</div>
+        <p style="color: var(--neon-blue);">ARFIX OS v1.0.0</p>
     </div>
 </body>
 </html>
