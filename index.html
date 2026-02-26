@@ -12,7 +12,7 @@
         body {
             background-color: var(--dark-space);
             color: white;
-            font-family: 'Courier New', Courier, monospace; /* خط يوحي بالبرمجة */
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
             display: flex;
             align-items: center;
@@ -20,43 +20,91 @@
             height: 100vh;
             overflow: hidden;
         }
-        /* تأثير النيون المتنفس للشعار */
+        .container { text-align: center; width: 80%; max-width: 400px; }
         .logo-container img {
-            max-width: 250px;
+            max-width: 200px;
             filter: drop-shadow(0 0 15px var(--neon-blue));
-            animation: breathe 4s ease-in-out infinite;
+            margin-bottom: 20px;
         }
-        @keyframes breathe {
-            0%, 100% { opacity: 0.8; transform: scale(1); filter: drop-shadow(0 0 10px var(--neon-blue)); }
-            50% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 25px var(--neon-blue)); }
-        }
-        .system-status {
-            text-align: center;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-        }
-        .typing {
-            border-left: 2px solid var(--neon-blue);
-            white-space: nowrap;
+        /* شريط التقدم */
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 10px;
+            margin: 20px 0;
             overflow: hidden;
-            margin: 10px auto;
-            letter-spacing: 2px;
-            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+            border: 1px solid rgba(0, 255, 255, 0.3);
         }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--neon-blue); } }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-blue);
+            transition: width 0.1s linear;
+        }
+        #percentage { color: var(--neon-blue); font-weight: bold; }
+        .hidden { display: none; }
+        
+        /* لوحة الأدوات */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .tool-card {
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid var(--neon-blue);
+            padding: 15px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .tool-card:hover { background: rgba(0, 255, 255, 0.2); }
     </style>
 </head>
 <body>
-    <div class="system-status">
+    <div class="container" id="loader-screen">
         <div class="logo-container">
             <img src="Logo.png" alt="ARFIX Logo">
         </div>
-        <div class="typing">> جاري فحص بيئة النظام...</div>
-        <p style="color: var(--neon-blue);">ARFIX OS v1.0.0</p>
+        <div id="status">> جاري تهيئة النظام...</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div id="percentage">0%</div>
     </div>
+
+    <div class="container hidden" id="main-dashboard">
+        <h2 style="color: var(--neon-blue);">لوحة تحكم ARFIX</h2>
+        <div class="tools-grid">
+            <div class="tool-card">🔍 فحص الجهاز</div>
+            <div class="tool-card">⚡ أدوات سريعة</div>
+            <div class="tool-card">💾 نسخ احتياطي</div>
+        </div>
+    </div>
+
+    <script>
+        let progress = 0;
+        const progressBar = document.getElementById('progress-bar');
+        const percentageText = document.getElementById('percentage');
+        const loaderScreen = document.getElementById('loader-screen');
+        const mainDashboard = document.getElementById('main-dashboard');
+
+        // تحديث الشريط كل 100 ميلي ثانية ليتم اكتماله في 10 ثوانٍ
+        const interval = setInterval(() => {
+            progress += 1;
+            progressBar.style.width = progress + '%';
+            percentageText.innerText = progress + '%';
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loaderScreen.classList.add('hidden');
+                    mainDashboard.classList.remove('hidden');
+                }, 500);
+            }
+        }, 100);
+    </script>
 </body>
 </html>
